@@ -12,6 +12,7 @@
     "@remotion/cli": "^4.0.251",
     "@remotion/lambda": "^4.0.251",
     "@remotion/player": "^4.0.251",
+    "@remotion/renderer": "^4.0.251",
     "next": "15.1.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

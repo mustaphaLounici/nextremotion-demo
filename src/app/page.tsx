@@ -85,10 +85,49 @@ export default function Home() {
   const handleDownload = async () => {
     setIsRendering(true);
     try {
-      // Here you would typically call your backend API to render the video
-      alert('To enable video download, you need to set up a Remotion Lambda or a server-side rendering endpoint.');
+      const response = await fetch('/api/render', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          inputProps: {
+            text,
+            effect,
+            backgroundColor: colorPreset.bg,
+            textColor: colorPreset.text,
+            fontSize,
+            backgroundImage,
+            audioUrl,
+          },
+          durationInFrames: duration * 30,
+          fps: 30,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to render video');
+      }
+
+      // Create a blob from the response
+      const blob = await response.blob();
+      
+      // Create a download link
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'video.mp4';
+      
+      // Trigger download
+      document.body.appendChild(link);
+      link.click();
+      
+      // Cleanup
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
     } catch (error) {
       console.error('Failed to render video:', error);
+      alert('Failed to render video. Please try again.');
     } finally {
       setIsRendering(false);
     }
