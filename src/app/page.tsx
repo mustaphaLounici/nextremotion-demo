@@ -4,7 +4,9 @@ import { Player } from '@remotion/player';
 import { Logo } from '../remotion/Logo';
 import { useState, useEffect } from 'react';
 
-const ANIMATION_EFFECTS = [
+type AnimationEffect = 'fade' | 'bounce' | 'spin';
+
+const ANIMATION_EFFECTS: Array<{value: AnimationEffect; label: string}> = [
   { value: 'fade', label: '🌟 Fade In' },
   { value: 'bounce', label: '💫 Bounce' },
   { value: 'spin', label: '🔄 Spin' },
@@ -25,13 +27,12 @@ const DEFAULT_AUDIO = '/defaults/cinematic-intro.wav';
 
 export default function Home() {
   const [text, setText] = useState(DEFAULT_TEXT);
-  const [effect, setEffect] = useState<'fade' | 'bounce' | 'spin'>('bounce');
-  const [colorPreset, setColorPreset] = useState(COLOR_PRESETS[2]); // Night Sky theme
-  const [fontSize, setFontSize] = useState(99);
+  const [effect, setEffect] = useState<AnimationEffect>('bounce');
+  const [colorPreset, setColorPreset] = useState(COLOR_PRESETS[1]); // Night Sky theme
+  const [fontSize, setFontSize] = useState(72);
   const [backgroundImage, setBackgroundImage] = useState<string>();
   const [audioUrl, setAudioUrl] = useState<string>();
   const [duration, setDuration] = useState(4);
-  const [isRendering, setIsRendering] = useState(false);
 
   // Load default assets
   useEffect(() => {
@@ -79,57 +80,6 @@ export default function Home() {
         setAudioUrl(reader.result as string);
       };
       reader.readAsDataURL(file);
-    }
-  };
-
-  const handleDownload = async () => {
-    setIsRendering(true);
-    try {
-      const response = await fetch('/api/render', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          inputProps: {
-            text,
-            effect,
-            backgroundColor: colorPreset.bg,
-            textColor: colorPreset.text,
-            fontSize,
-            backgroundImage,
-            audioUrl,
-          },
-          durationInFrames: duration * 30,
-          fps: 30,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to render video');
-      }
-
-      // Create a blob from the response
-      const blob = await response.blob();
-      
-      // Create a download link
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'video.mp4';
-      
-      // Trigger download
-      document.body.appendChild(link);
-      link.click();
-      
-      // Cleanup
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error('Failed to render video:', error);
-      alert('Failed to render video. Please try again.');
-    } finally {
-      setIsRendering(false);
     }
   };
 
@@ -210,7 +160,7 @@ export default function Home() {
                   {ANIMATION_EFFECTS.map((animEffect) => (
                     <button
                       key={animEffect.value}
-                      onClick={() => setEffect(animEffect.value as any)}
+                      onClick={() => setEffect(animEffect.value)}
                       className={`px-4 py-2 rounded-md text-left transition-colors ${
                         effect === animEffect.value
                           ? 'bg-blue-500 text-white'
@@ -256,36 +206,11 @@ export default function Home() {
               </div>
 
               <div className="pt-4 border-t border-gray-700">
-                <button
-                  onClick={handleDownload}
-                  disabled={isRendering}
-                  className="w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 disabled:bg-blue-400 disabled:cursor-not-allowed text-white rounded-md font-medium flex items-center justify-center gap-2 transition-colors"
-                >
-                  {isRendering ? (
-                    <>
-                      <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                      </svg>
-                      Rendering...
-                    </>
-                  ) : (
-                    <>
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                      </svg>
-                      Download Video
-                    </>
-                  )}
-                </button>
-              </div>
-
-              <div className="pt-4 border-t border-gray-700">
                 <div className="text-gray-400 text-sm">
                   <p className="font-medium text-white mb-1">Created by:</p>
                   <p>Lounici Mustapha</p>
                   <a 
-                    href="mailto:lounici.musta@gmail.com" 
+                    href="mailto:lounicimustapha6@gmail.com" 
                     className="text-blue-400 hover:text-blue-300 transition-colors"
                   >
                     lounicimustapha6@gmail.com

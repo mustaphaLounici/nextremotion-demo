@@ -1,10 +1,12 @@
 import { interpolate, useCurrentFrame, AbsoluteFill, spring, Audio } from 'remotion';
 
-interface LogoProps {
+export type AnimationEffect = 'bounce' | 'spin' | 'fade';
+
+export interface LogoProps {
   text: string;
   backgroundColor: string;
   textColor: string;
-  effect: 'bounce' | 'spin' | 'fade';
+  effect: AnimationEffect;
   fontSize: number;
   backgroundImage?: string;
   audioUrl?: string;

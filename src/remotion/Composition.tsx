@@ -1,13 +1,13 @@
 import { Composition } from 'remotion';
 import { Logo } from './Logo';
-import type { ComponentType } from 'react';
 
-export const RemotionVideo: React.FC = () => {
+export const RemotionVideo = () => {
   return (
     <>
       <Composition
         id="Logo"
-        component={Logo as ComponentType<any>}
+        // @ts-expect-error - Remotion types are not fully compatible
+        component={Logo}
         durationInFrames={60}
         fps={30}
         width={1920}
@@ -16,7 +16,7 @@ export const RemotionVideo: React.FC = () => {
           text: "Next.js + Remotion",
           backgroundColor: "#000000",
           textColor: "#ffffff",
-          effect: "fade" as const,
+          effect: "fade",
           fontSize: 64
         }}
       />

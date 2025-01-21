@@ -1,8 +1,6 @@
 # Video Intro Creator with Next.js and Remotion
 
-A powerful web application that allows you to create professional video intros with customizable text, animations, and effects. Built with Next.js and Remotion.
-
-![Video Intro Creator](public/preview.png)
+A modern web application for creating and previewing professional video intros in real-time. Built with Next.js and Remotion.
 
 ## Features
 
@@ -12,11 +10,15 @@ A powerful web application that allows you to create professional video intros w
 - 🖼️ Custom background image upload
 - 🎵 Background music support
 - ⚡ Adjustable duration and font size
-- 💾 Video download in MP4 format
+- 🎥 Live preview with playback controls
 
-## Prerequisites
+## Demo
 
-Before you begin, ensure you have the following installed:
+Visit the live demo: [Video Intro Creator](https://nextremotion-demo.vercel.app)
+
+## Getting Started
+
+### Prerequisites
 
 1. **Node.js** - Version 16.x or higher
    ```bash
@@ -24,30 +26,14 @@ Before you begin, ensure you have the following installed:
    node --version
    ```
 
-2. **FFmpeg** - Required for video rendering
-   ```bash
-   # For macOS using Homebrew
-   brew install ffmpeg
+2. **Package Manager** - npm (comes with Node.js)
 
-   # For Windows using Chocolatey
-   choco install ffmpeg
-
-   # For Ubuntu/Debian
-   sudo apt-get install ffmpeg
-   ```
-
-3. **System Requirements**:
-   - macOS, Windows, or Linux
-   - Minimum 4GB RAM (8GB recommended)
-   - Modern web browser (Chrome recommended)
-
-## Installation
+### Installation
 
 1. Clone the repository:
    ```bash
    git clone https://github.com/mustaphaLounici/nextremotion-demo.git
-   
-   cd video-intro-creator
+   cd nextremotion-demo
    ```
 
 2. Install dependencies:
@@ -55,11 +41,11 @@ Before you begin, ensure you have the following installed:
    npm install
    ```
 
-3. Add default assets:
+3. Add default assets (optional):
    - Place a background image in `public/defaults/space-bg.jpg`
    - Place background music in `public/defaults/cinematic-intro.wav`
 
-## Running the Application
+### Development
 
 1. Start the development server:
    ```bash
@@ -71,11 +57,23 @@ Before you begin, ensure you have the following installed:
    http://localhost:3000
    ```
 
+### Building for Production
+
+1. Create a production build:
+   ```bash
+   npm run build
+   ```
+
+2. Start the production server:
+   ```bash
+   npm start
+   ```
+
 ## Usage Guide
 
 1. **Customize Your Video**:
    - Enter your text message
-   - Choose an animation effect
+   - Choose an animation effect (Fade, Bounce, or Spin)
    - Select a color theme
    - Upload a background image (optional)
    - Add background music (optional)
@@ -84,51 +82,36 @@ Before you begin, ensure you have the following installed:
 2. **Preview**:
    - Use the video player controls to preview
    - Play, pause, and scrub through your video
-   - Adjust settings in real-time
+   - Adjust settings in real-time to see changes
 
-3. **Download**:
-   - Click the "Download Video" button
-   - Wait for rendering to complete
-   - Video will be saved as MP4
+3. **Screen Recording**:
+   - To save your video, use your system's screen recording tool
+   - For macOS: Use QuickTime Player or Screenshot toolbar (Shift + Command + 5)
+   - For Windows: Use Xbox Game Bar (Windows + G) or OBS Studio
 
-## Troubleshooting
-
-### Common Issues
-
-1. **Video rendering fails**:
-   - Ensure FFmpeg is properly installed
-   - Check your system has enough memory
-   - Verify file permissions in temp directory
-
-2. **Assets not loading**:
-   - Verify default assets are in correct locations
-   - Check file formats are supported
-   - Clear browser cache
-
-3. **Performance issues**:
-   - Reduce video duration
-   - Optimize uploaded images
-   - Close unnecessary browser tabs
-
-### Error Messages
-
-- `FFmpeg not found`: Install FFmpeg using instructions above
-- `Memory limit exceeded`: Free up system memory or reduce video complexity
-- `File permission error`: Check system permissions
-
-## Technical Details
+## Tech Stack
 
 - **Frontend**: Next.js 14, React, TailwindCSS
-- **Video Rendering**: Remotion
-- **Media Processing**: FFmpeg
-- **Supported Formats**:
-  - Images: JPG, PNG, WebP
-  - Audio: MP3, WAV
-  - Output: MP4 (H.264)
+- **Video Engine**: Remotion
+- **Styling**: Tailwind CSS
+- **TypeScript**: For type safety
 
-## Development
+## Project Structure
 
-To contribute or modify:
+```
+nextremotion-demo/
+├── src/
+│   ├── app/             # Next.js app directory
+│   │   └── page.tsx     # Main page component
+│   └── remotion/        # Remotion components
+│       ├── Logo.tsx     # Video composition
+│       └── Root.tsx     # Root composition
+├── public/              # Static assets
+│   └── defaults/        # Default media files
+└── package.json         # Project dependencies
+```
+
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch
