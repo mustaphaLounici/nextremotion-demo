@@ -2,7 +2,7 @@
 
 import { Player } from '@remotion/player';
 import { Logo } from '../remotion/Logo';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const ANIMATION_EFFECTS = [
   { value: 'fade', label: '🌟 Fade In' },
@@ -18,15 +18,47 @@ const COLOR_PRESETS = [
   { bg: '#581c87', text: '#e9d5ff', name: 'Royal' },
 ];
 
+// Default content
+const DEFAULT_TEXT = "Transform Your Ideas Into Reality";
+const DEFAULT_BACKGROUND = '/defaults/space-bg.jpg';
+const DEFAULT_AUDIO = '/defaults/cinematic-intro.wav';
+
 export default function Home() {
-  const [text, setText] = useState("Create Something Amazing!");
-  const [effect, setEffect] = useState<'fade' | 'bounce' | 'spin'>('fade');
-  const [colorPreset, setColorPreset] = useState(COLOR_PRESETS[0]);
-  const [fontSize, setFontSize] = useState(64);
+  const [text, setText] = useState(DEFAULT_TEXT);
+  const [effect, setEffect] = useState<'fade' | 'bounce' | 'spin'>('bounce');
+  const [colorPreset, setColorPreset] = useState(COLOR_PRESETS[2]); // Night Sky theme
+  const [fontSize, setFontSize] = useState(99);
   const [backgroundImage, setBackgroundImage] = useState<string>();
   const [audioUrl, setAudioUrl] = useState<string>();
-  const [duration, setDuration] = useState(2);
+  const [duration, setDuration] = useState(4);
   const [isRendering, setIsRendering] = useState(false);
+
+  // Load default assets
+  useEffect(() => {
+    // Load default background
+    fetch(DEFAULT_BACKGROUND)
+      .then(response => response.blob())
+      .then(blob => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setBackgroundImage(reader.result as string);
+        };
+        reader.readAsDataURL(blob);
+      })
+      .catch(console.error);
+
+    // Load default audio
+    fetch(DEFAULT_AUDIO)
+      .then(response => response.blob())
+      .then(blob => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setAudioUrl(reader.result as string);
+        };
+        reader.readAsDataURL(blob);
+      })
+      .catch(console.error);
+  }, []);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -217,7 +249,7 @@ export default function Home() {
                     href="mailto:lounici.musta@gmail.com" 
                     className="text-blue-400 hover:text-blue-300 transition-colors"
                   >
-                    lounici.musta@gmail.com
+                    lounicimustapha6@gmail.com
                   </a>
                 </div>
               </div>
