@@ -2,7 +2,11 @@
 
 A modern web application for creating and previewing professional video intros in real-time. Built with Next.js and Remotion.
 
-## Features
+## 🚀 Live Demo
+
+Check out the live demo: [Video Intro Creator](https://nextremotion-demo.vercel.app/)
+
+## ✨ Features
 
 - 🎨 Real-time video preview
 - 🎬 Multiple animation effects (Fade, Bounce, Spin)
